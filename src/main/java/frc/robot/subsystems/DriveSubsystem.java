@@ -10,8 +10,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -21,18 +21,13 @@ public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  public static final CANSparkMax neo1 = new CANSparkMax(DriveConstants.NEO_1, MotorType.kBrushless);
-  public static final CANSparkMax neo2 = new CANSparkMax(DriveConstants.NEO_2, MotorType.kBrushless);
+  public static final TalonFX falcon1 = new TalonFX(DriveConstants.FALCON_1);
+  public static final TalonFX falcon2 = new TalonFX(DriveConstants.FALCON_2);
   public static SpeedController leftSide;
   public static SpeedController rightSide;
   public static DifferentialDrive drive;
 
   public driveSubsystem() {
-    // set all NEOs to factory defaults
-    neo1.restoreFactoryDefaults();
-    neo2.restoreFactoryDefaults();
-    leftSide = new SpeedControllerGroup(neo1);
-    rightSide = new SpeedControllerGroup(neo2);
     drive = new DifferentialDrive(leftSide, rightSide);
   }
   
