@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,45 +7,48 @@
 
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.driveSubsystem;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * An example command.  You can replace me with your own command.
+ * An example command that uses an example subsystem.
  */
-public class DriveCommand extends Command {
-  public DriveCommand() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_drive);
+public class driveCommand extends CommandBase {
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  private final driveSubsystem m_driveSubsystem;
+
+  /**
+   * Creates a new ExampleCommand.
+   *
+   * @param subsystem The subsystem used by this command.
+   */
+  public driveCommand(driveSubsystem subsystem) {
+    m_driveSubsystem = subsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
   }
 
-  // Called just before this Command runs the first time
+  // Called when the command is initially scheduled.
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  protected void execute() {
-    Robot.m_drive.arcadeDrive(OI.driveController.getY(Hand.kLeft), OI.driveController.getX(Hand.kRight));
+  public void execute() {
+    m_driveSubsystem.arcadeDrive(RobotContainer.m_driveController.getY(Hand.kLeft), RobotContainer.m_driveController.getX(Hand.kRight));
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  // Called once the command ends or is interrupted.
   @Override
-  protected boolean isFinished() {
+  public void end(boolean interrupted) {
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
     return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }
