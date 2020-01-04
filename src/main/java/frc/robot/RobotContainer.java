@@ -1,15 +1,19 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved. */
+/* Open Source Software - may be modified and shared by FRC teams. The code */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* the project. */
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.driveCommand;
 import frc.robot.subsystems.driveSubsystem;
 
 /**
@@ -19,14 +23,27 @@ import frc.robot.subsystems.driveSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final driveSubsystem m_driveSubsystem = new driveSubsystem();
-
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public static XboxController m_driveController = new XboxController(DriveConstants.k_driveController);
+  
+  /* 
+   * Subsystems
+   */   
+  private static final driveSubsystem m_driveSubsystem = new driveSubsystem();
+  public static final DifferentialDriveKinematics kDriveKinematics =
+    new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
+
+  /* 
+   * Commands
+   */  
+  private final Command m_driveCommand = new driveCommand(m_driveSubsystem);
+  // TODO: create an autonomous command
+  private final Command m_autoCommand = m_driveCommand;
+
+  public static XboxController m_driveController = new XboxController(OIConstants.kDriverController);
+
+
 
   public RobotContainer() {
     // Configure the button bindings
@@ -43,15 +60,12 @@ public class RobotContainer {
 
   }
 
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  /*public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    //return m_autoCommand;
-  }*/
+  public Command getAutonomousCommand() {
+    return m_autoCommand;
+  }
 }
