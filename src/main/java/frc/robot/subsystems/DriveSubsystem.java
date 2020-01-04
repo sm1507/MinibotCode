@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -19,10 +20,10 @@ public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  //TODO Talk to bryn about the undefined motorcontrollers when passing to differentalDrive
-  public static final TalonFX falcon1 = new TalonFX(DriveConstants.FALCON_1);
-  public static final TalonFX falcon2 = new TalonFX(DriveConstants.FALCON_2);
-  public static DifferentialDrive drive;
+  //When referencing this code, use WPI_TalonFX as TalonFX does not work with DifferentialDrive.
+   WPI_TalonFX falcon1 = new WPI_TalonFX(DriveConstants.FALCON_1);
+   WPI_TalonFX falcon2 = new WPI_TalonFX(DriveConstants.FALCON_2);
+   DifferentialDrive drive;
 
   public driveSubsystem() {
     drive = new DifferentialDrive(falcon1, falcon2);
