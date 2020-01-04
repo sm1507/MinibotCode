@@ -19,14 +19,13 @@ public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
+  //TODO Talk to bryn about the undefined motorcontrollers when passing to differentalDrive
   public static final TalonFX falcon1 = new TalonFX(DriveConstants.FALCON_1);
   public static final TalonFX falcon2 = new TalonFX(DriveConstants.FALCON_2);
-  public static SpeedController leftSide;
-  public static SpeedController rightSide;
   public static DifferentialDrive drive;
 
   public driveSubsystem() {
-    drive = new DifferentialDrive(leftSide, rightSide);
+    drive = new DifferentialDrive(falcon1, falcon2);
   }
   
   @Override
