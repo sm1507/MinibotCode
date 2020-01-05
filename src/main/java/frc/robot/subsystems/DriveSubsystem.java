@@ -7,11 +7,14 @@
 
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+
 public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
@@ -19,10 +22,14 @@ public class driveSubsystem extends SubsystemBase {
   //When referencing this code, use WPI_TalonFX as TalonFX is not for FRC use and does not work with DifferentialDrive.
    WPI_TalonFX falcon1 = new WPI_TalonFX(DriveConstants.FALCON_1);
    WPI_TalonFX falcon2 = new WPI_TalonFX(DriveConstants.FALCON_2);
+   public static SpeedController leftSide;
+   public static SpeedController rightSide;
    DifferentialDrive drive;
 
   public driveSubsystem() {
-    drive = new DifferentialDrive(falcon1, falcon2);
+    leftSide = new SpeedControllerGroup(falcon1);
+    rightSide = new SpeedControllerGroup(falcon2);
+    drive = new DifferentialDrive(leftSide, rightSide);
   }
   
   @Override
