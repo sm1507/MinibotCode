@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * An example command that uses an example subsystem.
+ * driveCommand
  */
 public class driveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
