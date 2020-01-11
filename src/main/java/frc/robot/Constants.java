@@ -18,7 +18,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public static final int NEO_1 = 0;
+        public static final int NEO_1 = 2;
         public static final int NEO_2 = 1;
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
