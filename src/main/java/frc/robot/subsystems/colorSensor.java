@@ -46,7 +46,7 @@ public class colorSensor extends SubsystemBase {
      */
     String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-
+    
     if (match.color == kBlueTarget) {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
@@ -65,6 +65,9 @@ public class colorSensor extends SubsystemBase {
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
 
+    int proximity = m_colorSensor.getProximity();
+    SmartDashboard.putNumber("Proximity", proximity);
+    
     if (colorString != lastSeenColor) {
       System.out.println("Color: " + colorString);
       lastSeenColor = colorString;
