@@ -39,7 +39,7 @@ public class RobotContainer {
   /* 
    * Commands
    */  
-  private final Command m_driveCommand = new driveCommand(m_driveSubsystem);
+  // private final Command m_driveCommand = new driveCommand(m_driveSubsystem);
   private final Command m_autoCommand = new autonomous();
 
   public static XboxController m_driveController = new XboxController(OIConstants.kDriverController);
