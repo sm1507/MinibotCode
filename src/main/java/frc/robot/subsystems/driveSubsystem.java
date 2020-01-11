@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -21,8 +21,8 @@ public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  public static final CANSparkMax neo1 = new CANSparkMax(DriveConstants.NEO_1, MotorType.kBrushless);
-  public static final CANSparkMax neo2 = new CANSparkMax(DriveConstants.NEO_2, MotorType.kBrushless);
+  public static final CANSparkMax neo1 = new CANSparkMax(Constants.DriveConstants.NEO_1, MotorType.kBrushless);
+  public static final CANSparkMax neo2 = new CANSparkMax(Constants.DriveConstants.NEO_2, MotorType.kBrushless);
   public static SpeedController leftSide;
   public static SpeedController rightSide;
   public static DifferentialDrive drive;
