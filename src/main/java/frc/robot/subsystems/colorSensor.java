@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -17,29 +18,26 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 
 public class colorSensor extends SubsystemBase {
-  //space for variables
+  // space for variables
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
-
+  private int count = 0;
   /*
-   * Color Wheel
-   *   Blue   CMY: 100,0,0    RGB: #00FFFF 
-   *   Green  CMY: 100,0,100  RGB: #00FF00
-   *   Red    CMY: 0,100,100  RGB: #FF0000
-   *   Yellow CMY: 0,0,100    RGB: #FFFF00
-*/
-private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+   * Color Wheel Blue CMY: 100,0,0 RGB: #00FFFF Green CMY: 100,0,100 RGB: #00FF00
+   * Red CMY: 0,100,100 RGB: #FF0000 Yellow CMY: 0,0,100 RGB: #FFFF00
+   */
+  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+  private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
   public colorSensor() {
     // colors we want to match
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);    
+    m_colorMatcher.addColorMatch(kYellowTarget);
   }
 
   @Override
@@ -53,7 +51,7 @@ private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
      */
     String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-    
+
     if (match.color == kBlueTarget) {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
@@ -74,12 +72,51 @@ private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
     int proximity = m_colorSensor.getProximity();
     SmartDashboard.putNumber("Proximity", proximity);
-    
-   /* if (colorString != lastSeenColor) {
-      System.out.println("Color: " + colorString);
-      lastSeenColor = colorString;
-      }
-      */
-    }
-  }
 
+    /* Code for counting colors */
+
+
+    if ("Red" == lastSeenColor) {
+      if (colorString == "Green") {
+        count = count + 1;
+      }
+      if (colorString == "Yellow") {
+        count = count - 1;
+      }
+    } else if ("Green" == lastSeenColor) {
+      if (colorString == "Blue") {
+        count = count + 1;
+      }
+      if (colorString == "Red") {
+        count = count - 1;
+      }
+    } else if ("Blue" == lastSeenColor) {
+      if (colorString == "Yellow") {
+        count = count++;
+      }
+      if (colorString == "Green") {
+        count = count - 1;
+      }
+    } else if ("Yellow" == lastSeenColor) {
+      if (colorString == "Red") {
+        count = count + 1;
+      }
+      if (colorString == "Blue") {
+        count = count - 1;
+      }
+    }
+    lastSeenColor = colorString;
+//TODO: Detect errors and unknown colors
+
+    //System.out.println("Color Change Count: " + count);
+
+    
+
+    /*
+     * Print out for colorString
+     * 
+     * if (colorString != lastSeenColor) { System.out.println("Color: " +
+     * colorString); lastSeenColor = colorString; }
+     */
+  }
+}
