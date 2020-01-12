@@ -27,6 +27,8 @@ public final class Constants {
         public static final boolean kLeftEncoderReversed = false;
         public static final boolean kRightEncoderReversed = false;
 
+        public static final boolean kGyroReversed = true;
+
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
         // These characterization values MUST be determined either experimentally or theoretically
         // for *your* robot's drive.
@@ -50,6 +52,7 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
+        public static final double kEncoderDistancePerPulse = 1.0;
     }
 
     public static final class OIConstants {

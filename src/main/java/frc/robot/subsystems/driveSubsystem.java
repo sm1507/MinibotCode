@@ -35,36 +35,31 @@ public class driveSubsystem extends SubsystemBase {
    */
   public static final CANSparkMax m_leftNEO = new CANSparkMax(DriveConstants.kLeftNEO, MotorType.kBrushless);
   public static final CANSparkMax m_rightNEO = new CANSparkMax(DriveConstants.kRightNEO, MotorType.kBrushless);
-  public static SpeedController leftSide;
-  public static SpeedController rightSide;
-  public static DifferentialDrive m_drive;
+  public static SpeedController m_leftMotors = new SpeedControllerGroup(m_leftNEO);;
+  public static SpeedController m_rightMotors =new SpeedControllerGroup(m_leftNEO);
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+
+
+  // The left-side drive encoder
+  private final Encoder m_leftEncoder =
+      new Encoder(DriveConstants.kLeftEncoderPort, DriveConstants.kLeftEncoderReversed);
+
+  // The right-side drive encoder
+  private final Encoder m_rightEncoder =
+      new Encoder(DriveConstants.kRightEncoderPort, DriveConstants.kRightEncoderReversed);
 
   public driveSubsystem() {
     // set all NEOs to factory defaults
     m_leftNEO.restoreFactoryDefaults();
     m_rightNEO.restoreFactoryDefaults();
-    leftSide = new SpeedControllerGroup(m_leftNEO);
-    rightSide = new SpeedControllerGroup(m_rightNEO);
-    m_drive = new DifferentialDrive(leftSide, rightSide);
 
-
-       // Sets the distance per pulse for the encoders
-       m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-       m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    // Sets the distance per pulse for the encoders
+    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
    
-       resetEncoders();
-       m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    resetEncoders();
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
-
-  // The left-side drive encoder
-  private final Encoder m_leftEncoder =
-      new Encoder(DriveConstants.kLeftEncoderPort,
-                  DriveConstants.kLeftEncoderReversed);
-
-  // The right-side drive encoder
-  private final Encoder m_rightEncoder =
-      new Encoder(DriveConstants.kRightEncoderPort,
-                  DriveConstants.kRightEncoderReversed);
 
   // The gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
