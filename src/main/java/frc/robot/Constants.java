@@ -18,8 +18,14 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public static final int NEO_1 = 2;
-        public static final int NEO_2 = 1;
+        public static final int kLeftNEO  = 2;
+        public static final int kRightNEO = 1;
+
+        public static final int kLeftEncoderPort  = 3;
+        public static final int kRightEncoderPort = 4;
+
+        public static final boolean kLeftEncoderReversed = false;
+        public static final boolean kRightEncoderReversed = false;
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
         // These characterization values MUST be determined either experimentally or theoretically
