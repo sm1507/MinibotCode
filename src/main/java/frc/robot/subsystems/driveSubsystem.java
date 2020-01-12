@@ -33,56 +33,37 @@ public class driveSubsystem extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  public static final CANSparkMax neo1 = new CANSparkMax(DriveConstants.NEO_1, MotorType.kBrushless);
-  public static final CANSparkMax neo2 = new CANSparkMax(DriveConstants.NEO_2, MotorType.kBrushless);
+  public static final CANSparkMax m_leftNEO = new CANSparkMax(DriveConstants.kLeftNEO, MotorType.kBrushless);
+  public static final CANSparkMax m_rightNEO = new CANSparkMax(DriveConstants.kRightNEO, MotorType.kBrushless);
   public static SpeedController leftSide;
   public static SpeedController rightSide;
-  public static DifferentialDrive drive;
+  public static DifferentialDrive m_drive;
 
   public driveSubsystem() {
     // set all NEOs to factory defaults
-    neo1.restoreFactoryDefaults();
-    neo2.restoreFactoryDefaults();
-    leftSide = new SpeedControllerGroup(neo1);
-    rightSide = new SpeedControllerGroup(neo2);
-    drive = new DifferentialDrive(leftSide, rightSide);
-  }
-  
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-  public void arcadeDrive(double xSpeed, double zRotation) {
-    drive.arcadeDrive(xSpeed, zRotation);
-  }
+    m_leftNEO.restoreFactoryDefaults();
+    m_rightNEO.restoreFactoryDefaults();
+    leftSide = new SpeedControllerGroup(m_leftNEO);
+    rightSide = new SpeedControllerGroup(m_rightNEO);
+    m_drive = new DifferentialDrive(leftSide, rightSide);
 
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-    drive.tankDrive(leftSpeed, rightSpeed);
+
+       // Sets the distance per pulse for the encoders
+       m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+       m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+   
+       resetEncoders();
+       m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
-}
-
-public class DriveSubsystem extends SubsystemBase {
-  // The motors on the left side of the drive.
-  private final SpeedControllerGroup m_leftMotors =
-      new SpeedControllerGroup(new PWMVictorSPX(DriveConstants.kLeftMotor1Port),
-                               new PWMVictorSPX(DriveConstants.kLeftMotor2Port));
-
-  // The motors on the right side of the drive.
-  private final SpeedControllerGroup m_rightMotors =
-      new SpeedControllerGroup(new PWMVictorSPX(DriveConstants.kRightMotor1Port),
-                               new PWMVictorSPX(DriveConstants.kRightMotor2Port));
-
-  // The robot's drive
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
   // The left-side drive encoder
   private final Encoder m_leftEncoder =
-      new Encoder(DriveConstants.kLeftEncoderPorts[0], DriveConstants.kLeftEncoderPorts[1],
+      new Encoder(DriveConstants.kLeftEncoderPort,
                   DriveConstants.kLeftEncoderReversed);
 
   // The right-side drive encoder
   private final Encoder m_rightEncoder =
-      new Encoder(DriveConstants.kRightEncoderPorts[0], DriveConstants.kRightEncoderPorts[1],
+      new Encoder(DriveConstants.kRightEncoderPort,
                   DriveConstants.kRightEncoderReversed);
 
   // The gyro sensor
@@ -90,18 +71,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
-
-  /**
-   * Creates a new DriveSubsystem.
-   */
-  public DriveSubsystem() {
-    // Sets the distance per pulse for the encoders
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-
-    resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-  }
 
   @Override
   public void periodic() {
