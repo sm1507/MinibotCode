@@ -106,6 +106,8 @@ public class colorSensor extends SubsystemBase {
       }
     }
     lastSeenColor = colorString;
+    SmartDashboard.putNumber("Count", count);
+    
 //TODO: Detect errors and unknown colors
 
     //System.out.println("Color Change Count: " + count);
