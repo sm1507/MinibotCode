@@ -28,11 +28,11 @@ import frc.robot.subsystems.driveSubsystem;
  */
 public class RobotContainer {
   // Subsystems
-  private final driveSubsystem m_driveSubsystem = new driveSubsystem();
+  //private final driveSubsystem m_driveSubsystem = new driveSubsystem();
   private final addressableLED m_addressableLED = new addressableLED(MiscConstants.k_LedPwmPort);
 
   // Commands
-  private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
+  //private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,7 +42,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_driveSubsystem.setDefaultCommand(m_driveCommand);
+    //m_driveSubsystem.setDefaultCommand(m_driveCommand);
   }
 
   /**
@@ -54,7 +54,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
 
-    abutton.whileHeld(new RunCommand(() -> m_addressableLED.periodic(), m_addressableLED));
+    abutton.whileHeld(new RunCommand(() -> m_addressableLED.rainbow(), m_addressableLED));
   }
 
   /**
