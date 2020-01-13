@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.autonomous;
@@ -65,7 +65,7 @@ public class RobotContainer {
     // Example button
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
 
-    // ybutton.whenPressed(new fooCommand(m_fooSubsystem));
+    ybutton.whenPressed(new InstantCommand());
   }
 
   /**
