@@ -31,17 +31,19 @@ public class addressableLED extends SubsystemBase {
     // Set the data
     m_led.setData(m_ledBuffer);
     m_led.start();
+    System.out.print("AddressableLED STARTED\n");
   }
 
-  @Override
-  public void periodic() {
+  public void rainbow() {
     // Fill the buffer with a rainbow
-    rainbow();
+    updateRainbow();
     // Set the LEDs
     m_led.setData(m_ledBuffer);
+
+    System.out.print("AddressableLED.rainbow()\n");
   }
 
-  private void rainbow() {
+  private void updateRainbow() {
     // For every pixel
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Calculate the hue - hue is easier for rainbows because the color
