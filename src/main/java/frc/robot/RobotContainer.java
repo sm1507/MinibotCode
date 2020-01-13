@@ -54,7 +54,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
 
-    abutton.whileHeld(new RunCommand(() -> m_addressableLED.rainbow(), m_addressableLED));
+    abutton.whileHeld(() -> m_addressableLED.rainbow(), m_addressableLED);
   }
 
   /**
