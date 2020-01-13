@@ -75,39 +75,34 @@ public class colorSensor extends SubsystemBase {
 
     /* Code for counting colors */
 
-
-    if ("Red" == lastSeenColor) {
-      if (colorString == "Green") {
-        count = count + 1;
-      }
-      if (colorString == "Yellow") {
-        count = count - 1;
-      }
-    } else if ("Green" == lastSeenColor) {
-      if (colorString == "Blue") {
-        count = count + 1;
-      }
-      if (colorString == "Red") {
-        count = count - 1;
-      }
-    } else if ("Blue" == lastSeenColor) {
-      if (colorString == "Yellow") {
-        count = count++;
-      }
-      if (colorString == "Green") {
-        count = count - 1;
-      }
-    } else if ("Yellow" == lastSeenColor) {
-      if (colorString == "Red") {
-        count = count + 1;
-      }
-      if (colorString == "Blue") {
-        count = count - 1;
-      }
+    if (lastSeenColor.equals("Red") && colorString.equals("Green")) {
+      count = count ++;
     }
+    if (lastSeenColor.equals("Red") && colorString.equals("Yellow")) {
+      count = count --;
+    }
+    if (lastSeenColor.equals("Green") && colorString.equals("Blue")) {
+      count = count ++;
+    }
+    if (lastSeenColor.equals("Green") && colorString.equals("Red")) {
+      count = count --;
+    }
+    if (lastSeenColor.equals("Blue") && colorString.equals("Yellow")) {
+      count = count ++;
+    }
+    if (lastSeenColor.equals("Blue") && colorString.equals("Green")) {
+      count = count --;
+    }
+    if (lastSeenColor.equals("Yellow") && colorString.equals("Red")) {
+      count = count ++;
+    }
+    if (lastSeenColor.equals("Yellow") && colorString.equals("Blue")) {
+      count = count --;
+    }
+//Color reset and count display on SmartDashboard
     lastSeenColor = colorString;
     SmartDashboard.putNumber("Count", count);
-    
+
 //TODO: Detect errors and unknown colors
 
     //System.out.println("Color Change Count: " + count);
