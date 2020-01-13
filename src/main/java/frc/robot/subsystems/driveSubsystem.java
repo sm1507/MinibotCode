@@ -22,8 +22,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // import edu.wpi.first.wpilibj.examples.ramsetecommand.Constants.DriveConstants;
 import frc.robot.Constants.DriveConstants;
-
+import com.revrobotics.AlternateEncoderType;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -41,12 +43,8 @@ public class driveSubsystem extends SubsystemBase {
 
 
   // The left-side drive encoder
-  private final Encoder m_leftEncoder =
-      new Encoder(DriveConstants.kLeftEncoderPort, DriveConstants.kLeftEncoderReversed);
-
-  // The right-side drive encoder
-  private final Encoder m_rightEncoder =
-      new Encoder(DriveConstants.kRightEncoderPort, DriveConstants.kRightEncoderReversed);
+  private final CANEncoder m_leftEncoder = m_leftNEO.getEncoder(EncoderType.kQuadrature, 4096);
+  private final CANEncoder m_rightEncoder = m_rightNEO.getEncoder(EncoderType.kQuadrature, 4096);
 
   public driveSubsystem() {
     // set all NEOs to factory defaults
@@ -54,6 +52,7 @@ public class driveSubsystem extends SubsystemBase {
     m_rightNEO.restoreFactoryDefaults();
 
     // Sets the distance per pulse for the encoders
+    // TODO: cover Encoder.setDistancePerPulse to CANENcoder
     m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
     m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
    
@@ -70,7 +69,9 @@ public class driveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getDistance(),
+    // TODO: convert Encoder.getDistance to CANEncoder
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), 
+                      m_leftEncoder.getDistance(),
                       m_rightEncoder.getDistance());
   }
 
@@ -89,6 +90,7 @@ public class driveSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    // TODO: convert Encoder.getRate to CANEncoder
     return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
   }
 
@@ -127,8 +129,8 @@ public class driveSubsystem extends SubsystemBase {
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    m_leftEncoder.setPosition(0.0);   // was Encoder.reset();
+    m_rightEncoder.setPosition(0.0);  // was Encoder.reset();
   }
 
   /**
@@ -137,7 +139,8 @@ public class driveSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+    // TODO convert Encoder.getDistance to CANEncoder (maybe getPosition)
+    return (m_leftEncoder.getDistance()  + m_rightEncoder.getDistance()) / 2.0;
   }
 
   /**
@@ -145,7 +148,7 @@ public class driveSubsystem extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public Encoder getLeftEncoder() {
+  public CANEncoder getLeftEncoder() {
     return m_leftEncoder;
   }
 
@@ -154,7 +157,7 @@ public class driveSubsystem extends SubsystemBase {
    *
    * @return the right drive encoder
    */
-  public Encoder getRightEncoder() {
+  public CANEncoder getRightEncoder() {
     return m_rightEncoder;
   }
 
