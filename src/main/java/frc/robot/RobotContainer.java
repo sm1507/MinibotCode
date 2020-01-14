@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.colorSensor;
@@ -24,7 +23,7 @@ import frc.robot.subsystems.driveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final driveSubsystem m_driveSubsystem = new driveSubsystem();
+  // private final driveSubsystem m_driveSubsystem = new driveSubsystem();
   private final colorSensor m_colorSensor = new colorSensor();
 
   /**
@@ -46,7 +45,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
   
-    ybutton.whenPressed(new RunCommand(() -> m_colorSensor.periodic(), m_colorSensor));
+    ybutton.whenPressed(() -> m_colorSensor.senseColorWheelPos(), m_colorSensor);
   }
 
 
