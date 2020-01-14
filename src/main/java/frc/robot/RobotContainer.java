@@ -55,15 +55,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
-    final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kA.value);
-    final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kA.value);
-    final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kA.value);
+    final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kB.value);
+    final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kX.value);
+    final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
 
     // abutton.whileHeld(() -> m_addressableLED.rainbow(), m_addressableLED);
-    abutton.whileHeld(() -> m_blinkin.set(0.65), m_blinkin);    // Orange
-    bbutton.whileHeld(() -> m_blinkin.set(-0.99), m_blinkin);   // Rainbow
-    xbutton.whileHeld(() -> m_blinkin.set(-0.35), m_blinkin);   // Red Scanner
-    ybutton.whileHeld(() -> m_blinkin.set(0.93), m_blinkin);    // White
+    abutton.whenPressed(() -> m_blinkin.set(0.65), m_blinkin);    // Orange
+    bbutton.whenPressed(() -> m_blinkin.set(-0.99), m_blinkin);   // Rainbow
+    xbutton.whenPressed(() -> m_blinkin.set(-0.35), m_blinkin);   // Red Scanner
+    ybutton.whenPressed(() -> m_blinkin.set(0.93), m_blinkin);    // White
   }
 
   /**
