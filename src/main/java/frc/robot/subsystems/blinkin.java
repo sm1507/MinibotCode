@@ -27,6 +27,7 @@ public class blinkin extends SubsystemBase {
    */
   public blinkin(int pwmPort) {
     m_blinkin = new Spark(pwmPort);
+    solid_orange();
   }
 
   /*
