@@ -21,7 +21,8 @@ public final class Constants {
         public static final int NEO_2 = 2;
         public static final int k_driveController = 0;
     }
-    public static final class MiscConstants {
-        public static final int k_LedPwmPort = 9;
+    public static final class PWMPorts {
+        public static final int kBlinkin = 0;
+        public static final int kAddressableLED = 9;
     }
 }

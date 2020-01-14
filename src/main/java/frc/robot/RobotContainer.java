@@ -15,9 +15,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.MiscConstants;
+import frc.robot.Constants.PWMPorts;
 import frc.robot.commands.driveCommand;
 import frc.robot.subsystems.addressableLED;
+import frc.robot.subsystems.blinkin;
 import frc.robot.subsystems.driveSubsystem;
 
 /**
@@ -29,7 +30,8 @@ import frc.robot.subsystems.driveSubsystem;
 public class RobotContainer {
   // Subsystems
   //private final driveSubsystem m_driveSubsystem = new driveSubsystem();
-  private final addressableLED m_addressableLED = new addressableLED(MiscConstants.k_LedPwmPort);
+  //private final addressableLED m_addressableLED = new addressableLED(PWMPorts.kAddressableLED);
+  private final blinkin m_blinkin = new blinkin(PWMPorts.kBlinkin);
 
   // Commands
   //private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
@@ -53,8 +55,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
+    final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kA.value);
+    final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kA.value);
+    final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kA.value);
 
-    abutton.whileHeld(() -> m_addressableLED.rainbow(), m_addressableLED);
+    // abutton.whileHeld(() -> m_addressableLED.rainbow(), m_addressableLED);
+    abutton.whileHeld(() -> m_blinkin.set(0.65), m_blinkin);    // Orange
+    bbutton.whileHeld(() -> m_blinkin.set(-0.99), m_blinkin);   // Rainbow
+    xbutton.whileHeld(() -> m_blinkin.set(-0.35), m_blinkin);   // Red Scanner
+    ybutton.whileHeld(() -> m_blinkin.set(0.93), m_blinkin);    // White
   }
 
   /**
