@@ -40,8 +40,17 @@ public class colorSensor extends SubsystemBase {
     m_colorMatcher.addColorMatch(kYellowTarget);
   }
 
-  @Override
-  public void periodic() {
+  /**
+   * Reset color and rotation count for color wheel. 
+   */
+  public void reset() {
+    count = 0;
+  }
+
+  /**
+   * Run color wheel sensor, track position.
+   */
+  public void senseColorWheelPos() {
     // This method will be called once per scheduler run
     Color detectedColor = m_colorSensor.getColor();
     String lastSeenColor = "Unkown";
@@ -75,53 +84,42 @@ public class colorSensor extends SubsystemBase {
 
     /* Code for counting colors */
 
-    if (lastSeenColor.equals("Red")){
+    if (lastSeenColor.equals("Red")) {
       if (colorString.equals("Green")) {
-        count = count +1;
+        count = count + 1;
       }
       if (colorString.equals("Yellow")) {
-        count = count -1;
-      } 
-    }
-    else if (lastSeenColor.equals("Green")){
+        count = count - 1;
+      }
+    } else if (lastSeenColor.equals("Green")) {
       if (colorString.equals("Blue")) {
-        count = count +1;
+        count = count + 1;
       }
       if (colorString.equals("Red")) {
-        count = count -1;
+        count = count - 1;
       }
-    }
-    else if (lastSeenColor.equals("Blue")){
+    } else if (lastSeenColor.equals("Blue")) {
       if (colorString.equals("Yellow")) {
-        count = count +1;
+        count = count + 1;
       }
       if (colorString.equals("Green")) {
-        count = count -1;
-    } 
-    else if(lastSeenColor.equals("Yellow")){
-      if (colorString.equals("Red")) {
-        count = count +1;
+        count = count - 1;
+      } else if (lastSeenColor.equals("Yellow")) {
+        if (colorString.equals("Red")) {
+          count = count + 1;
+        }
+        if (colorString.equals("Blue")) {
+          count = count - 1;
+        }
+      }
+      // Color reset and count display on SmartDashboard
+      lastSeenColor = colorString;
+      SmartDashboard.putNumber("Count", count);
+
+      // TODO: Detect errors and unknown colors
+
+      // System.out.println("Color Change Count: " + count);
+
     }
-      if (colorString.equals("Blue")) {
-        count = count -1;
-    }
-    }
-//Color reset and count display on SmartDashboard
-    lastSeenColor = colorString;
-    SmartDashboard.putNumber("Count", count);
-
-//TODO: Detect errors and unknown colors
-
-    //System.out.println("Color Change Count: " + count);
-
-    
-
-    /*
-     * Print out for colorString
-     * 
-     * if (colorString != lastSeenColor) { System.out.println("Color: " +
-     * colorString); lastSeenColor = colorString; }
-     */
-  }
   }
 }
