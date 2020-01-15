@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -22,7 +21,9 @@ public class colorSensor extends SubsystemBase {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
+  private String lastSeenColor = "Unknown";
   private int count = 0;
+
   /*
    * Color Wheel Blue CMY: 100,0,0 RGB: #00FFFF Green CMY: 100,0,100 RGB: #00FF00
    * Red CMY: 0,100,100 RGB: #FF0000 Yellow CMY: 0,0,100 RGB: #FFFF00
@@ -38,13 +39,20 @@ public class colorSensor extends SubsystemBase {
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
+
+    SmartDashboard.putNumber("Red", 0.0);
+    SmartDashboard.putNumber("Green", 0.0);
+    SmartDashboard.putNumber("Blue", 0.0);
+    SmartDashboard.putNumber("Confidence", 0.0);
+    SmartDashboard.putString("Detected Color", "Initializing");
   }
 
   /**
-   * Reset color and rotation count for color wheel. 
+   * Reset color and rotation count for color wheel.
    */
   public void reset() {
     count = 0;
+    SmartDashboard.putNumber("Count", count);
   }
 
   /**
@@ -53,7 +61,6 @@ public class colorSensor extends SubsystemBase {
   public void senseColorWheelPos() {
     // This method will be called once per scheduler run
     Color detectedColor = m_colorSensor.getColor();
-    String lastSeenColor = "Unkown";
 
     /**
      * Run the color match algorithm on our detected color
@@ -78,6 +85,7 @@ public class colorSensor extends SubsystemBase {
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putNumber("Count", 0);
 
     int proximity = m_colorSensor.getProximity();
     SmartDashboard.putNumber("Proximity", proximity);
@@ -104,22 +112,27 @@ public class colorSensor extends SubsystemBase {
       }
       if (colorString.equals("Green")) {
         count = count - 1;
-      } else if (lastSeenColor.equals("Yellow")) {
-        if (colorString.equals("Red")) {
-          count = count + 1;
-        }
-        if (colorString.equals("Blue")) {
-          count = count - 1;
-        }
       }
-      // Color reset and count display on SmartDashboard
-      lastSeenColor = colorString;
-      SmartDashboard.putNumber("Count", count);
-
-      // TODO: Detect errors and unknown colors
-
-      // System.out.println("Color Change Count: " + count);
-
+    } else if (lastSeenColor.equals("Yellow")) {
+      if (colorString.equals("Red")) {
+        count = count + 1;
+      }
+      if (colorString.equals("Blue")) {
+        count = count - 1;
+      }
     }
+
+    // TODO: remove debug print
+    if (!lastSeenColor.equals(colorString)) {
+      System.out.println("lastSeen: " + lastSeenColor + " -> " + colorString);
+      System.out.println("Color Change Count: " + count);
+    }
+
+    // Color reset and count display on SmartDashboard
+    lastSeenColor = colorString;
+    SmartDashboard.putNumber("Count", count);
+
+    // TODO: Detect errors and unknown colors
+
   }
 }
