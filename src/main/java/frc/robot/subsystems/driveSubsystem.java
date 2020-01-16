@@ -51,11 +51,15 @@ public class driveSubsystem extends SubsystemBase {
     m_leftNEO.restoreFactoryDefaults();
     m_rightNEO.restoreFactoryDefaults();
 
-    // Sets the distance per pulse for the encoders
-    // TODO: cover Encoder.setDistancePerPulse to CANENcoder
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    // Sets the distance per pulse for the encoders (Encoder class not CANEncoder)
+    //m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    //m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
    
+    // set scaling factor for CANEncoder.getPossition() so that it matches the output of
+    // Encoder.getDistance() method.
+    m_leftEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+    m_rightEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
@@ -68,11 +72,13 @@ public class driveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // Note: periodic() is run by the schedule, always. No matter what 
     // Update the odometry in the periodic block
-    // TODO: convert Encoder.getDistance to CANEncoder
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), 
-                      m_leftEncoder.getDistance(),
-                      m_rightEncoder.getDistance());
+                      m_leftEncoder.getPosition(),
+                      m_rightEncoder.getPosition());
+    
+                      // Note: was Encoder.getDistance()
   }
 
   /**
