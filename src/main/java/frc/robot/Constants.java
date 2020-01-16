@@ -52,8 +52,6 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
-        public static final double kEncoderDistancePerPulse = 1.0;
-
         // 6 inch (0.1524 meters) traction wheels circumference = 0.1524 * Math.PI;
         public static final double kDistancePerWheelRevolutionMeters = 0.1524 * Math.PI;
 
