@@ -54,8 +54,8 @@ public class driveSubsystem extends SubsystemBase {
     m_rightEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
 
     // Native scale is RPM. Scale velocity so that it is in meters/sec
-    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
-    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
+    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
