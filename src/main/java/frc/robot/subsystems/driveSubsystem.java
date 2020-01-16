@@ -7,9 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.EncoderType;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -18,17 +21,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-
-// import edu.wpi.first.wpilibj.examples.ramsetecommand.Constants.DriveConstants;
 import frc.robot.Constants.DriveConstants;
-import com.revrobotics.AlternateEncoderType;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.EncoderType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.SpeedController;
 
 
 public class driveSubsystem extends SubsystemBase {
@@ -59,6 +52,10 @@ public class driveSubsystem extends SubsystemBase {
     // Encoder.getDistance() method.
     m_leftEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
     m_rightEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+
+    // Native scale is RPM. Scale velocity so that it is in meters/sec
+    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -96,8 +93,11 @@ public class driveSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    // TODO: convert Encoder.getRate to CANEncoder
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(),
+                                            m_rightEncoder.getVelocity());
+
+    // OLD:
+    // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
   }
 
   /**
@@ -145,8 +145,8 @@ public class driveSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    // TODO convert Encoder.getDistance to CANEncoder (maybe getPosition)
-    return (m_leftEncoder.getDistance()  + m_rightEncoder.getDistance()) / 2.0;
+    // Was Encoder.getDistance()
+    return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
   }
 
   /**
