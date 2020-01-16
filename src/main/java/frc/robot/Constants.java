@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -18,16 +20,21 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public static final int kLeftNEO  = 2;
+        public static final int kLeftNEO = 2;
         public static final int kRightNEO = 1;
 
-        public static final int kLeftEncoderPort  = 3;
+        public static final int kLeftEncoderPort = 3;
         public static final int kRightEncoderPort = 4;
 
         public static final boolean kLeftEncoderReversed = false;
         public static final boolean kRightEncoderReversed = false;
 
         public static final boolean kGyroReversed = true;
+
+        // TODO: replace with actual track width
+        public static final double kTrackwidthMeters = 0.6;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+                new DifferentialDriveKinematics(kTrackwidthMeters);
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
         // These characterization values MUST be determined either experimentally or theoretically
@@ -41,8 +48,19 @@ public final class Constants {
         // TODO: Example value only - as above, this must be tuned for your drive!
         public static final double kPDriveVel = 8.5;
 
-        // TODO: replace with actual track width
-        public static final double kTrackwidthMeters = 0.69;
+        public static final int kEncoderCPR = 4096;
+        public static final double kWheelDiameterMeters = 0.1524;
+
+        // 6 inch (0.1524 meters) traction wheels circumference = 0.1524 * Math.PI;
+        public static final double kDistancePerWheelRevolutionMeters =
+                kWheelDiameterMeters * Math.PI;
+
+        // gear reduction from NEO to wheels 18:1
+        public static final double kGearReduction = 1.0 / 18.0;
+
+        // Assumes the encoders are directly mounted on the motor shafts
+        public static final double kEncoderDistancePerPulseMeters =
+                (kWheelDiameterMeters * Math.PI * kGearReduction) / (double) kEncoderCPR;
 
         // https://docs.wpilib.org/en/latest/docs/software/trajectory-end-to-end/entering-constants.html#max-trajectory-velocity-acceleration
         public static final double kMaxSpeedMetersPerSecond = 3;
@@ -52,11 +70,6 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
-        // 6 inch (0.1524 meters) traction wheels circumference = 0.1524 * Math.PI;
-        public static final double kDistancePerWheelRevolutionMeters = 0.1524 * Math.PI;
-
-        // gear reduction from NEO to wheels 18:1  
-        public static final double kGearReduction = 1.0 / 18.0;
     }
 
     public static final class OIConstants {
@@ -66,9 +79,9 @@ public final class Constants {
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-    
+
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
-      }
+    }
 }

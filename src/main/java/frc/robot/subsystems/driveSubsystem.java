@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -41,9 +40,6 @@ public class driveSubsystem extends SubsystemBase {
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
-
-  private final DifferentialDriveKinematics m_kinematics =
-      new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
 
   /**
    * driveSubsystem constructor
@@ -198,14 +194,5 @@ public class driveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
-  }
-
-  /**
-   * Returns the kinematics for the drivetrain.
-   * 
-   * @return DifferentialDriveKinematics object for drivetrain
-   */
-  public DifferentialDriveKinematics getKinematics() {
-    return m_kinematics;
   }
 }
