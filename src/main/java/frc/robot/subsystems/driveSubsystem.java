@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved. */
+/* Open Source Software - may be modified and shared by FRC teams. The code */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* the project. */
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
@@ -25,41 +25,15 @@ import frc.robot.Constants.DriveConstants;
 
 
 public class driveSubsystem extends SubsystemBase {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
-  public static final CANSparkMax m_leftNEO = new CANSparkMax(DriveConstants.kLeftNEO, MotorType.kBrushless);
-  public static final CANSparkMax m_rightNEO = new CANSparkMax(DriveConstants.kRightNEO, MotorType.kBrushless);
+  public static final CANSparkMax m_leftNEO =
+      new CANSparkMax(DriveConstants.kLeftNEO, MotorType.kBrushless);
+  public static final CANSparkMax m_rightNEO =
+      new CANSparkMax(DriveConstants.kRightNEO, MotorType.kBrushless);
   public static SpeedController m_leftMotors = new SpeedControllerGroup(m_leftNEO);;
-  public static SpeedController m_rightMotors =new SpeedControllerGroup(m_leftNEO);
+  public static SpeedController m_rightMotors = new SpeedControllerGroup(m_leftNEO);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-
-
-  // The left-side drive encoder
   private final CANEncoder m_leftEncoder = m_leftNEO.getEncoder(EncoderType.kQuadrature, 4096);
   private final CANEncoder m_rightEncoder = m_rightNEO.getEncoder(EncoderType.kQuadrature, 4096);
-
-  public driveSubsystem() {
-    // set all NEOs to factory defaults
-    m_leftNEO.restoreFactoryDefaults();
-    m_rightNEO.restoreFactoryDefaults();
-
-    // Sets the distance per pulse for the encoders (Encoder class not CANEncoder)
-    //m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    //m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-   
-    // set scaling factor for CANEncoder.getPossition() so that it matches the output of
-    // Encoder.getDistance() method.
-    m_leftEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
-    m_rightEncoder.setPositionConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
-
-    // Native scale is RPM. Scale velocity so that it is in meters/sec
-    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
-    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
-
-    resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-  }
 
   // The gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
@@ -67,15 +41,39 @@ public class driveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
 
+  /**
+   * driveSubsystem constructor
+   * 
+   * uses NEOs and implements odometry
+   */
+  public driveSubsystem() {
+    // set all NEOs to factory defaults
+    m_leftNEO.restoreFactoryDefaults();
+    m_rightNEO.restoreFactoryDefaults();
+
+    // set scaling factor for CANEncoder.getPossition() so that it matches the output of
+    // Encoder.getDistance() method.
+    m_leftEncoder.setPositionConversionFactor(
+        DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+    m_rightEncoder.setPositionConversionFactor(
+        DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction);
+
+    // Native scale is RPM. Scale velocity so that it is in meters/sec
+    m_leftEncoder.setVelocityConversionFactor(
+        DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
+    m_rightEncoder.setVelocityConversionFactor(
+        DriveConstants.kDistancePerWheelRevolutionMeters * DriveConstants.kGearReduction / 60.0);
+
+    resetEncoders();
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+  }
+
   @Override
   public void periodic() {
-    // Note: periodic() is run by the schedule, always. No matter what 
+    // Note: periodic() is run by the scheduler, always. No matter what.
     // Update the odometry in the periodic block
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), 
-                      m_leftEncoder.getPosition(),
-                      m_rightEncoder.getPosition());
-    
-                      // Note: was Encoder.getDistance()
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
+        m_rightEncoder.getPosition());
   }
 
   /**
@@ -94,10 +92,7 @@ public class driveSubsystem extends SubsystemBase {
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(),
-                                            m_rightEncoder.getVelocity());
-
-    // OLD:
-    // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+        m_rightEncoder.getVelocity());
   }
 
   /**
@@ -135,8 +130,8 @@ public class driveSubsystem extends SubsystemBase {
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    m_leftEncoder.setPosition(0.0);   // was Encoder.reset();
-    m_rightEncoder.setPosition(0.0);  // was Encoder.reset();
+    m_leftEncoder.setPosition(0.0); // was Encoder.reset();
+    m_rightEncoder.setPosition(0.0); // was Encoder.reset();
   }
 
   /**
@@ -168,7 +163,7 @@ public class driveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
+   * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
