@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.autonomous;
 import frc.robot.commands.driveCommand;
 import frc.robot.subsystems.driveSubsystem;
 
@@ -36,7 +35,7 @@ public class RobotContainer {
   
   // Commands
   private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
-  private final Command m_autoCommand = new autonomous();
+  // private final Command m_autoCommand = 
 
   // Other
   public static final DifferentialDriveKinematics kDriveKinematics =
@@ -74,6 +73,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_autoCommand;
+    // TODO: placeholder for autonomous command
+    return new InstantCommand();
   }
 }
