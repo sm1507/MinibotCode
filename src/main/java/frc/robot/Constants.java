@@ -25,5 +25,9 @@ public static final class DriveConstants {
 }
 public static final class Manipulator {
     public static final int TURRET_DRIVE  = 1;
+    public static final int kSoftMaxTurretAngle  = 1;
+    public static final int kSoftMinTurretAngle  = 1;
+    public static final int kTurretRotationsPerTick  = 1;
+
 }
 }
