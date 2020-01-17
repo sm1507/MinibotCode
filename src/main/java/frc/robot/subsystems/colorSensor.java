@@ -44,7 +44,7 @@ public class colorSensor extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     Color detectedColor = m_colorSensor.getColor();
-    String lastSeenColor = "Unkown";
+    String lastSeenColor = "Unknown";
 
     /**
      * Run the color match algorithm on our detected color
