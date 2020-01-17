@@ -77,6 +77,8 @@ public class Autonomous {
      */
     public Command creatAutonomousCommand() {
 
+        var initalTime = System.nanoTime();
+
         // An example trajectory to follow. All units in meters.
         Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
@@ -97,6 +99,8 @@ public class Autonomous {
                 // RamseteCommand passes volts to the callback
                 m_robotDrive::tankDriveVolts, m_robotDrive);
 
+        var dt = (System.nanoTime() - initalTime) / 1E6;
+        System.out.println("RamseteCommand generation time: " + dt + "ms");
 
         // Run path following command, then stop at the end.
         return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
