@@ -34,13 +34,13 @@ public class RobotContainer {
   private final driveSubsystem m_driveSubsystem = new driveSubsystem();
   
   // Commands
+  private final Autonomous autonomous = new Autonomous(m_driveSubsystem);
   private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
-  // private final Command m_autoCommand = 
+  private final Command m_autoCommand = autonomous.creatAutonomousCommand();
 
   // Other
   public static final DifferentialDriveKinematics kDriveKinematics =
    new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
-
   public static XboxController m_driveController = new XboxController(OIConstants.kDriverController);
 
  
@@ -73,7 +73,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // TODO: placeholder for autonomous command
-    return new InstantCommand();
+    return m_autoCommand;
   }
 }
