@@ -31,7 +31,7 @@ public class RobotContainer {
   // Subsystems
   //private final driveSubsystem m_driveSubsystem = new driveSubsystem();
   //private final addressableLED m_addressableLED = new addressableLED(PWMPorts.kAddressableLED);
-  private final blinkin m_blinkin = new blinkin(PWMPorts.kBlinkin);
+  public static final blinkin m_blinkin = new blinkin(PWMPorts.kBlinkin);
 
   // Commands
   //private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
