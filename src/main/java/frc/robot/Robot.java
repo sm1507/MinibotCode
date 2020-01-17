@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,8 +21,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  public static boolean manualMode = true;
 
   private RobotContainer m_robotContainer;
+  public static final Ultrasonic sensor = new Ultrasonic(1,2);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -96,6 +100,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if (RobotContainer.m_operatorController.getStartButtonPressed() && manualMode == false) {
+			manualMode = true;
+    }	
+    else if (RobotContainer.m_operatorController.getStartButtonPressed() && manualMode == true){
+			manualMode = false;
+    }	
   }
 
   @Override
