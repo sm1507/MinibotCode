@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.colorSensor;
+import frc.robot.subsystems.controlPanelMotors;
 import frc.robot.subsystems.driveSubsystem;
 
 /**
@@ -26,6 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final driveSubsystem m_driveSubsystem = new driveSubsystem();
   private final colorSensor m_colorSensor = new colorSensor();
+  private final controlPanelMotors m_controlPanelMotors = new controlPanelMotors();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -45,8 +47,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
+    final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kX.value);
   
-    ybutton.whenPressed(new RunCommand(() -> m_colorSensor.periodic(), m_colorSensor));
+    ybutton.whenPressed(() -> m_colorSensor.periodic(), m_colorSensor);
+    xbutton.whileHeld(() -> m_joystick.setSpeed(0.2), m_controlPanelMotors);
   }
 
 
