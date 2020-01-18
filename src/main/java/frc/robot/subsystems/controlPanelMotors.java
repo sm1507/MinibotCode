@@ -13,31 +13,28 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 public class controlPanelMotors extends SubsystemBase {
   /**
    * Creates a new controlPanelMotors.
    */
   private static final int kMotorPort = 0;
-  private static final int kJoystickPort = 0;
-  private static final int kEncoderPortA = 0;
-  private static final int kEncoderPortB = 1;
+  private static final int kJoystickPort = 1;
 
   private SpeedController m_motor;
   private Joystick m_joystick;
-  private Encoder m_encoder;
 
 
   public controlPanelMotors() {
-
-
+    m_motor = new WPI_TalonFX(kMotorPort);
+    m_joystick = new Joystick(kJoystickPort);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+
+   public void setSpeed(double speed) {
+    WPI_TalonFX.set(speed);
+}
 }
