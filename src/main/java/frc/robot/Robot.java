@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,6 +34,23 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    System.out.println("Configuring Motion Magic");
+    System.out.println("Setting Motor Output");
+    DriveSubsystem.falcon2.follow(DriveSubsystem.falcon1);
+    DriveSubsystem.falcon1.configNominalOutputForward(0, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configPeakOutputForward(1, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+    System.out.println("Setting PIDF Values");
+    DriveSubsystem.falcon1.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
+		DriveSubsystem.falcon1.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.config_kP(Constants.kSlotIdx, Constants.kGains.kP, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    System.out.println("Configuring Motion Velocity/Acceleration");
+    DriveSubsystem.falcon1.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configMotionAcceleration(6000, Constants.kTimeoutMs);
+    System.out.println("Motion Magic Configuration Complete! Awaiting Enable Command.");
   }
 
   /**

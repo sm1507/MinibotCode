@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -31,6 +32,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem));
   }
 
   /**
