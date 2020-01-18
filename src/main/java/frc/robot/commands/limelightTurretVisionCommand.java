@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -36,7 +35,7 @@ public class limelightTurretVisionCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Robot.manualMode==true) {
+    if (Robot.manualMode==false) {
        // These numbers must be tuned for Comp Robot!  Be careful!
     final double STEER_K = 0.05;                    // how hard to turn toward the target
 

@@ -26,6 +26,7 @@ public class turretSubsystem extends SubsystemBase {
         (int) (Constants.Manipulator.kSoftMaxTurretAngle / (360.0 * Constants.Manipulator.kTurretRotationsPerTick)));
     turretDrive.configReverseSoftLimitThreshold(
         (int) (Constants.Manipulator.kSoftMinTurretAngle / (360.0 * Constants.Manipulator.kTurretRotationsPerTick)));
+
     
   }
 

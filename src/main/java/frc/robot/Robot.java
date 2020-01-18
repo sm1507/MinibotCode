@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.turretSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static boolean manualMode = true;
+  public static boolean manualMode = false;
 
   private RobotContainer m_robotContainer;
   public static final Ultrasonic sensor = new Ultrasonic(1,2);
@@ -35,6 +36,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    turretSubsystem.turretDrive.setSelectedSensorPosition(0, 0, 10); 
+    turretSubsystem.turretDrive.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
   /**
