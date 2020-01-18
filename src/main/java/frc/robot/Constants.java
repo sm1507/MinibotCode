@@ -31,8 +31,8 @@ public final class Constants {
 
         public static final boolean kGyroReversed = true;
 
-        // TODO: replace with actual track width
-        public static final double kTrackwidthMeters = 0.6;
+        // Actual Minibot width (wheel-to-wheel) 16.625 inches or 0.396875 meters
+        public static final double kTrackwidthMeters = 0.396875;
         public static final DifferentialDriveKinematics kDriveKinematics =
                 new DifferentialDriveKinematics(kTrackwidthMeters);
 
