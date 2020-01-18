@@ -63,12 +63,13 @@ public class RobotContainer {
 
     // Example button
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
-    final JoystickButton startbutton = new JoystickButton(m_driveController, Button.kStart.value)
+    final JoystickButton startbutton = new JoystickButton(m_driveController, Button.kStart.value);
 
+    // do nothing command
     ybutton.whenPressed(new InstantCommand());
     
     // Start button zeros the gyro heading
-    startbutton.whenPressed(() -> m_drive.zeroHeading()) 
+    startbutton.whenPressed(() -> m_drive.zeroHeading()); 
   }
 
   /**
