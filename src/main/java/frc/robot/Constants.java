@@ -21,6 +21,8 @@ public static final class DriveConstants {
     public static final int NEO_2 = 2;
     public static final int k_driveController = 0;
     public static final int k_operatorController = 1;
+	public static final int ClimbFalcon1 = 0;
+	public static final int ClimbFalcon2 = 0;
     
 }
 public static final class Manipulator {
