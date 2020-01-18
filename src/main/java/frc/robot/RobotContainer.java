@@ -31,11 +31,11 @@ public class RobotContainer {
    */
 
   // Subsystems
-  private final driveSubsystem m_driveSubsystem = new driveSubsystem();
+  private final driveSubsystem m_drive = new driveSubsystem();
   
   // Commands
-  private final Autonomous autonomous = new Autonomous(m_driveSubsystem);
-  private final driveCommand m_driveCommand = new driveCommand(m_driveSubsystem);
+  private final Autonomous autonomous = new Autonomous(m_drive);
+  private final driveCommand m_driveCommand = new driveCommand(m_drive);
   private final Command m_autoCommand = autonomous.creatAutonomousCommand();
 
   // Other
@@ -47,7 +47,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     // default command is arcade drive command
-    m_driveSubsystem.setDefaultCommand(m_driveCommand);
+    m_drive.setDefaultCommand(m_driveCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -63,8 +63,12 @@ public class RobotContainer {
 
     // Example button
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
+    final JoystickButton startbutton = new JoystickButton(m_driveController, Button.kStart.value)
 
     ybutton.whenPressed(new InstantCommand());
+    
+    // Start button zeros the gyro heading
+    startbutton.whenPressed(() -> m_drive.zeroHeading()) 
   }
 
   /**
