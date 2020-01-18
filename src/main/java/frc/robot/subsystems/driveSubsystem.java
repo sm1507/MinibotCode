@@ -25,6 +25,7 @@ public class driveSubsystem extends SubsystemBase {
   public static final CANSparkMax neo2 = new CANSparkMax(DriveConstants.NEO_2, MotorType.kBrushless);
   public static SpeedController leftSide;
   public static SpeedController rightSide;
+<<<<<<< Updated upstream:src/main/java/frc/robot/subsystems/driveSubsystem.java
   public static DifferentialDrive drive;
 
   public driveSubsystem() {
@@ -34,6 +35,14 @@ public class driveSubsystem extends SubsystemBase {
     leftSide = new SpeedControllerGroup(neo1);
     rightSide = new SpeedControllerGroup(neo2);
     drive = new DifferentialDrive(leftSide, rightSide);
+=======
+  //DifferentialDrive drive;
+
+  public DriveSubsystem() {
+    leftSide = new SpeedControllerGroup(falcon1);
+    rightSide = new SpeedControllerGroup(falcon2);
+    //drive = new DifferentialDrive(leftSide, rightSide);
+>>>>>>> Stashed changes:src/main/java/frc/robot/subsystems/DriveSubsystem.java
   }
   
   @Override
@@ -41,10 +50,10 @@ public class driveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void arcadeDrive(double xSpeed, double zRotation) {
-    drive.arcadeDrive(xSpeed, zRotation);
+    //drive.arcadeDrive(xSpeed, zRotation);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    drive.tankDrive(leftSpeed, rightSpeed);
+    //drive.tankDrive(leftSpeed, rightSpeed);
   }
 }

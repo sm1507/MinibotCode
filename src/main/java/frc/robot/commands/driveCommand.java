@@ -28,6 +28,23 @@ public class driveCommand extends CommandBase {
     m_driveSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+    System.out.println("Configuring Motion Magic");
+    System.out.println("Setting Motor Output");
+    DriveSubsystem.falcon2.follow(DriveSubsystem.falcon1);
+    DriveSubsystem.falcon1.configNominalOutputForward(0, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configPeakOutputForward(1, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+    System.out.println("Setting PIDF Values");
+    DriveSubsystem.falcon1.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
+		DriveSubsystem.falcon1.config_kF(Constants.kSlotIdx, Constants.kGains.kF, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.config_kP(Constants.kSlotIdx, Constants.kGains.kP, Constants.kTimeoutMs);
+		DriveSubsystem.falcon1.config_kI(Constants.kSlotIdx, Constants.kGains.kI, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.config_kD(Constants.kSlotIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    System.out.println("Configuring Motion Velocity/Acceleration");
+    DriveSubsystem.falcon1.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
+    DriveSubsystem.falcon1.configMotionAcceleration(6000, Constants.kTimeoutMs);
+    System.out.println("Motion Magic Configuration Complete!");
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +55,13 @@ public class driveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+<<<<<<< Updated upstream:src/main/java/frc/robot/commands/driveCommand.java
     m_driveSubsystem.arcadeDrive(RobotContainer.m_driveController.getY(Hand.kLeft), RobotContainer.m_driveController.getX(Hand.kRight));
+=======
+    //m_driveSubsystem.arcadeDrive(RobotContainer.m_driveController.getY(Hand.kLeft), RobotContainer.m_driveController.getX(Hand.kRight));
+    double targetPos =  RobotContainer.m_driveController.getY(Hand.kLeft) * 4096 * 10.0;
+    m_driveSubsystem.falcon1.set(ControlMode.MotionMagic, targetPos);
+>>>>>>> Stashed changes:src/main/java/frc/robot/commands/DriveCommand.java
   }
 
   // Called once the command ends or is interrupted.

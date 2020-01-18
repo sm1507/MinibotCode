@@ -17,8 +17,13 @@ package frc.robot;
  */
 public final class Constants {
 public static final class DriveConstants {
+<<<<<<< Updated upstream
     public static final int NEO_1  = 0;
     public static final int NEO_2 = 1;
+=======
+    public static final int FALCON_1  = 4;
+    public static final int FALCON_2 = 5;
+>>>>>>> Stashed changes
     public static final int k_driveController = 0;
 }
 }

@@ -22,6 +22,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+<<<<<<< Updated upstream
+=======
+import edu.wpi.first.wpilibj.SerialPort;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -38,7 +42,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
   static private double WHEEL_DIAMETER = 0.1524;
+<<<<<<< Updated upstream
   static private double GEARING = 18;
+=======
+  static private double GEARING = 18.0;
+>>>>>>> Stashed changes
   static private int PIDIDX = 0;
 
   Joystick stick;
@@ -93,7 +101,11 @@ public class Robot extends TimedRobot {
     // Note that the angle from the NavX and all implementors of wpilib Gyro
     // must be negated because getAngle returns a clockwise positive angle
     AHRS navx = new AHRS(SPI.Port.kMXP);
+<<<<<<< Updated upstream
     gyroAngleRadians = () -> 1 * Math.toRadians(navx.getAngle());
+=======
+    gyroAngleRadians = () -> -1 * Math.toRadians(-navx.getAngle());
+>>>>>>> Stashed changes
 
     //
     // Configure drivetrain movement
