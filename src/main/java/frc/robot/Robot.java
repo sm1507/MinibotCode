@@ -7,10 +7,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.elevatorSubsystem;
 import frc.robot.subsystems.turretSubsystem;
 
 /**
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     turretSubsystem.turretDrive.setSelectedSensorPosition(0, 0, 10);
     turretSubsystem.turretDrive.getSensorCollection().setQuadraturePosition(0, 10);
+    elevatorSubsystem.elevatorWinch.setNeutralMode(NeutralMode.Coast);
   }
 
   /**

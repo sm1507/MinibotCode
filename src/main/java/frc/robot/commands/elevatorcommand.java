@@ -13,22 +13,28 @@ import frc.robot.subsystems.elevatorSubsystem;
 
 
 public class elevatorCommand extends CommandBase {
-  public
+  private static final elevatorSubsystem subsystem = null;
+  public elevatorSubsystem m_elevatorSubsystem;
   /**
    * Creates a new elevatorCommand.
    */
   public elevatorCommand() {
+    m_elevatorSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.m_elevatorSubsystem.setelevatorPID(0.1, 0, 0, 0);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //RobotContainer.m_elevatorSubsystem.setelevatorPosition(0);
   }
 
   // Called once the command ends or is interrupted.

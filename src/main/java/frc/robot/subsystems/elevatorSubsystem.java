@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -15,6 +16,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.elevatorConstants;
 
 public class elevatorSubsystem extends SubsystemBase {
+
+  public double P;
+  public double I;
+  public double D;
+  public double F;
 
   private final WPI_TalonFX elevator1 = new WPI_TalonFX(elevatorConstants.elevator1);
   private final WPI_TalonFX elevator2 = new WPI_TalonFX(elevatorConstants.elevator2);
@@ -37,16 +43,25 @@ public class elevatorSubsystem extends SubsystemBase {
     elevator1.configPeakOutputReverse(-1, elevatorConstants.elevatorPivotTimeout);
     elevator1.setNeutralMode(NeutralMode.Coast);
     elevator2.setNeutralMode(NeutralMode.Coast);
+    P = 1.0;
+    I = 0;
+    D = 0;
+    F = 0;
   }
 
-  public void setelevatorRPM() {
-    // TODO: elevator1.set(ControlMode.Position, );Arm Deployment
+  public void setelevatorPosition(int desiredPosition) {
+
+    setelevatorPID(P, I, D, F);
+    elevator1.set(ControlMode.Position, desiredPosition);
   }
 
-  public void setelevatorPID(double P, double I, double D, double F) {
+  public void setelevatorPID(double P, double I, double D, double F)
+
+  {
     elevator1.config_kP(elevatorConstants.elevatorSlotIdx, P, elevatorConstants.elevatorPivotTimeout);
     elevator1.config_kP(elevatorConstants.elevatorSlotIdx, I, elevatorConstants.elevatorPivotTimeout);
     elevator1.config_kP(elevatorConstants.elevatorSlotIdx, D, elevatorConstants.elevatorPivotTimeout);
     elevator1.config_kP(elevatorConstants.elevatorSlotIdx, F, elevatorConstants.elevatorPivotTimeout);
   }
+
 }
