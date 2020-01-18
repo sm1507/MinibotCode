@@ -7,28 +7,30 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.elevatorSubsystem;
 
-
-public class elevatorCommand extends CommandBase {
-  public
+public class elevatorWinch extends CommandBase {
   /**
-   * Creates a new elevatorCommand.
+   * Creates a new elevatorWinch.
    */
-  public elevatorCommand() {
+  public elevatorWinch() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+	elevatorSubsystem.elevatorWinch.setNeutralMode(NeutralMode.Brake);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    elevatorSubsystem.elevatorWinch.set(ControlMode.PercentOutput, 1);
   }
 
   // Called once the command ends or is interrupted.

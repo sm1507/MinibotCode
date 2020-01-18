@@ -21,10 +21,15 @@ public static final class DriveConstants {
     public static final int NEO_2 = 2;
     public static final int k_driveController = 0;
     public static final int k_operatorController = 1;
-	public static final int ClimbFalcon1 = 0;
-	public static final int ClimbFalcon2 = 0;
-    
 }
+
+public static final class elevatorConstants{
+    public static final int elevator1 = 3;
+    public static final int elevator2 = 4;
+    public static final int elevatorWinch = 5;
+    public static final int elevatorPivotTimeout = 30;
+    public static final int elevatorSlotIdx = 1;
+    }
 public static final class Manipulator {
     public static final int TURRET_DRIVE  = 1;
     public static final int kSoftMaxTurretAngle  = 1;
