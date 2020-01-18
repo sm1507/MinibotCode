@@ -29,6 +29,7 @@ public class RobotContainer {
   private final colorSensor m_colorSensor = new colorSensor();
   private final controlPanelMotors m_controlPanelMotors = new controlPanelMotors();
 
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -50,7 +51,7 @@ public class RobotContainer {
     final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kX.value);
   
     ybutton.whenPressed(() -> m_colorSensor.periodic(), m_colorSensor);
-    xbutton.whileHeld(() -> m_joystick.setSpeed(0.2), m_controlPanelMotors);
+    xbutton.whileHeld(() -> m_controlPanelMotors.setSpeed(0.2), m_controlPanelMotors);
   }
 
 
