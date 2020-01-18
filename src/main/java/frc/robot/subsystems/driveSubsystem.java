@@ -7,19 +7,19 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -36,7 +36,8 @@ public class driveSubsystem extends SubsystemBase {
   private final CANEncoder m_rightEncoder = m_rightNEO.getEncoder(EncoderType.kQuadrature, 4096);
 
   // The gyro sensor
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  //private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final AHRS m_gyro = new AHRS();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
@@ -66,6 +67,8 @@ public class driveSubsystem extends SubsystemBase {
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+
+    SmartDashboard.putString("FirmwareVersion", m_gyro.getFirmwareVersion());
   }
 
   @Override
@@ -74,6 +77,23 @@ public class driveSubsystem extends SubsystemBase {
     // Update the odometry in the periodic block
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
         m_rightEncoder.getPosition());
+
+    SmartDashboard.putBoolean("IMU_Connected", m_gyro.isConnected());
+    SmartDashboard.putBoolean("IMU_IsCalibrating", m_gyro.isCalibrating());
+    SmartDashboard.putNumber("IMU_Yaw", m_gyro.getYaw());
+    SmartDashboard.putNumber("IMU_Pitch", m_gyro.getPitch());
+    SmartDashboard.putNumber("IMU_Roll", m_gyro.getRoll());
+
+    /* Display 9-axis Heading (requires magnetometer calibration to be useful) */
+    SmartDashboard.putNumber("IMU_CompassHeading", m_gyro.getCompassHeading());
+    SmartDashboard.putNumber("IMU_FusedHeading", m_gyro.getFusedHeading());
+
+    /* These functions are compatible w/the WPI Gyro Class, providing a simple */
+    /* path for upgrading from the Kit-of-Parts gyro to the navx-MXP */
+
+    SmartDashboard.putNumber("IMU_TotalYaw", m_gyro.getAngle());
+    SmartDashboard.putNumber("IMU_YawRateDPS", m_gyro.getRate());
+
   }
 
   /**
@@ -184,6 +204,7 @@ public class driveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
+    // TODO: use get fused heading 
     return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
