@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants.DriveConstants;
 
 
@@ -37,7 +38,7 @@ public class driveSubsystem extends SubsystemBase {
 
   // The gyro sensor
   //private final Gyro m_gyro = new ADXRS450_Gyro();
-  private final AHRS m_gyro = new AHRS();
+  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
