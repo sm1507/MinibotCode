@@ -20,8 +20,8 @@ public class driveSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   //When referencing this code, use WPI_TalonFX as TalonFX is not for FRC use and does not work with DifferentialDrive.
-   WPI_TalonFX falcon1 = new WPI_TalonFX(DriveConstants.FALCON_1);
-   WPI_TalonFX falcon2 = new WPI_TalonFX(DriveConstants.FALCON_2);
+   public WPI_TalonFX falcon1 = new WPI_TalonFX(DriveConstants.FALCON_1);
+   public WPI_TalonFX falcon2 = new WPI_TalonFX(DriveConstants.FALCON_2);
    public static SpeedController leftSide;
    public static SpeedController rightSide;
    DifferentialDrive drive;
