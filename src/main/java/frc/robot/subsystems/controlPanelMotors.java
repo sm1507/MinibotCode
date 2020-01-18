@@ -8,33 +8,21 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import frc.robot.Constants.ControlPanelConstants;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class controlPanelMotors extends SubsystemBase {
   /**
    * Creates a new controlPanelMotors.
    */
-  private static final int kMotorPort = 0;
-  private static final int kJoystickPort = 1;
-
   private SpeedController m_motor;
-  private Joystick m_joystick;
-
 
   public controlPanelMotors() {
-    m_motor = new WPI_TalonFX(kMotorPort);
-    m_joystick = new Joystick(kJoystickPort);
+    m_motor = new WPI_TalonFX(ControlPanelConstants.kMotorPort);
   }
 
-
-   public void setSpeed(double speed) {
-    WPI_TalonFX.set(speed);
-}
+  public void setSpeed(double speed) {
+    m_motor.set(speed);
+  }
 }
