@@ -67,10 +67,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+      System.out.println("Scheduling Autonomous Command");
       m_autonomousCommand.schedule();
+      System.out.println("Scheduling Autonomous Command");
     }
   }
 
@@ -88,6 +90,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     if (m_autonomousCommand != null) {
+      System.out.println("Cancelling Autonomous Command");
       m_autonomousCommand.cancel();
     }
   }

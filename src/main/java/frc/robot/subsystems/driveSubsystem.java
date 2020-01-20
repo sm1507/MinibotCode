@@ -69,7 +69,7 @@ public class driveSubsystem extends SubsystemBase {
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-    SmartDashboard.putString("FirmwareVersion", m_gyro.getFirmwareVersion());
+    //SmartDashboard.putString("FirmwareVersion", m_gyro.getFirmwareVersion());
   }
 
   @Override
@@ -79,21 +79,21 @@ public class driveSubsystem extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
         m_rightEncoder.getPosition());
 
-    SmartDashboard.putBoolean("IMU_Connected", m_gyro.isConnected());
-    SmartDashboard.putBoolean("IMU_IsCalibrating", m_gyro.isCalibrating());
+    //SmartDashboard.putBoolean("IMU_Connected", m_gyro.isConnected());
+    //SmartDashboard.putBoolean("IMU_IsCalibrating", m_gyro.isCalibrating());
     SmartDashboard.putNumber("IMU_Yaw", m_gyro.getYaw());
-    SmartDashboard.putNumber("IMU_Pitch", m_gyro.getPitch());
-    SmartDashboard.putNumber("IMU_Roll", m_gyro.getRoll());
+    //SmartDashboard.putNumber("IMU_Pitch", m_gyro.getPitch());
+    //SmartDashboard.putNumber("IMU_Roll", m_gyro.getRoll());
 
     /* Display 9-axis Heading (requires magnetometer calibration to be useful) */
-    SmartDashboard.putNumber("IMU_CompassHeading", m_gyro.getCompassHeading());
+    //SmartDashboard.putNumber("IMU_CompassHeading", m_gyro.getCompassHeading());
     SmartDashboard.putNumber("IMU_FusedHeading", m_gyro.getFusedHeading());
 
     /* These functions are compatible w/the WPI Gyro Class, providing a simple */
     /* path for upgrading from the Kit-of-Parts gyro to the navx-MXP */
 
-    SmartDashboard.putNumber("IMU_TotalYaw", m_gyro.getAngle());
-    SmartDashboard.putNumber("IMU_YawRateDPS", m_gyro.getRate());
+    //SmartDashboard.putNumber("IMU_TotalYaw", m_gyro.getAngle());
+    //SmartDashboard.putNumber("IMU_YawRateDPS", m_gyro.getRate());
 
   }
 
