@@ -22,6 +22,7 @@ public class colorSensor extends SubsystemBase {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
+  String lastSeenColor = "Unknown";
   private int count = 0;
   /*
    * Color Wheel Blue CMY: 100,0,0 RGB: #00FFFF Green CMY: 100,0,100 RGB: #00FF00
@@ -40,11 +41,10 @@ public class colorSensor extends SubsystemBase {
     m_colorMatcher.addColorMatch(kYellowTarget);
   }
 
-  @Override
-  public void periodic() {
+  public void senseColorWheelPos() {
     // This method will be called once per scheduler run
     Color detectedColor = m_colorSensor.getColor();
-    String lastSeenColor = "Unknown";
+    
 
     /**
      * Run the color match algorithm on our detected color
