@@ -19,16 +19,16 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public static final int NEO_1 = 1;
-        public static final int NEO_2 = 2;
+        public static final int NEO_1 = 2;
+        public static final int NEO_2 = 1;
         public static final int k_driveController = 0;
         public static final int k_operatorController = 1;
     }
 
     public static final class elevatorConstants {
-        public static final int elevator1 = 3;
-        public static final int elevator2 = 4;
-        public static final int elevatorWinch = 5;
+        public static final int elevator1 = 4;
+        public static final int elevator2 = 5;
+        public static final int elevatorWinch = 6;
         public static final int elevatorPivotTimeout = 30;
         public static final int elevatorSlotIdx = 1;
     }

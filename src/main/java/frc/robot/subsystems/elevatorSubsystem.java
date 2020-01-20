@@ -41,21 +41,23 @@ public class elevatorSubsystem extends SubsystemBase {
     elevator1.configNominalOutputReverse(0, elevatorConstants.elevatorPivotTimeout);
     elevator1.configPeakOutputForward(1, elevatorConstants.elevatorPivotTimeout);
     elevator1.configPeakOutputReverse(-1, elevatorConstants.elevatorPivotTimeout);
-    elevator1.setNeutralMode(NeutralMode.Coast);
-    elevator2.setNeutralMode(NeutralMode.Coast);
+    elevator1.setNeutralMode(NeutralMode.Brake);
+    elevator2.setNeutralMode(NeutralMode.Brake);
+
+    // TODO:set the PIDF to the correct distance/speed.
     P = 1.0;
     I = 0;
     D = 0;
     F = 0;
   }
 
-  public void setelevatorPosition(int desiredPosition) {
+  public void setElevatorPosition(int desiredPosition) {
 
-    setelevatorPID(P, I, D, F);
+    setElevatorPID(P, I, D, F);
     elevator1.set(ControlMode.Position, desiredPosition);
   }
 
-  public void setelevatorPID(double P, double I, double D, double F)
+  public void setElevatorPID(double P, double I, double D, double F)
 
   {
     elevator1.config_kP(elevatorConstants.elevatorSlotIdx, P, elevatorConstants.elevatorPivotTimeout);
