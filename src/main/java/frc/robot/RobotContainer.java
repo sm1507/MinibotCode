@@ -34,10 +34,9 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.driveCommand;
 import frc.robot.subsystems.driveSubsystem;
 
 /**
@@ -55,22 +54,23 @@ public class RobotContainer {
   private final driveSubsystem m_drive = new driveSubsystem();
   
   // Commands
-  private final driveCommand m_driveCommand = new driveCommand(m_drive);
-  private final Command m_autoCommand = getAutonomousCommand();
 
   // Other
-  public static final DifferentialDriveKinematics kDriveKinematics =
-   new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
-  public static XboxController m_driveController = new XboxController(OIConstants.kDriverController);
+  //public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
+  public XboxController m_driverController = new XboxController(OIConstants.kDriverController);
 
  
   public RobotContainer() {
 
-    // default command is arcade drive command
-    m_drive.setDefaultCommand(m_driveCommand);
-
     // Configure the button bindings
     configureButtonBindings();
+
+    // default command is arcade drive command
+    m_drive.setDefaultCommand(
+        // A split-stick arcade command, with forward/backward controlled by the left
+        // hand, and turning controlled by the right.
+        new RunCommand(() -> m_drive.arcadeDrive(m_driverController.getY(GenericHID.Hand.kLeft),
+            m_driverController.getX(GenericHID.Hand.kRight)), m_drive));
   }
 
   /**
@@ -82,8 +82,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Example button
-    final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
-    final JoystickButton startbutton = new JoystickButton(m_driveController, Button.kStart.value);
+    final JoystickButton ybutton = new JoystickButton(m_driverController, Button.kY.value);
+    final JoystickButton startbutton = new JoystickButton(m_driverController, Button.kStart.value);
 
     // do nothing command
     ybutton.whenPressed(new InstantCommand());
@@ -98,9 +98,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return new RunCommand(() -> m_drive.tankDriveVolts(0, 0));
+  }
+
+  public Command broken_getAutonomousCommand() {
     DifferentialDriveVoltageConstraint autoVoltageConstraint;
     TrajectoryConfig config;
-    
+  
     // Create a voltage constraint to ensure we don't accelerate too fast
     autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
