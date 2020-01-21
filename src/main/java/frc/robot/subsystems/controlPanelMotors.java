@@ -32,7 +32,7 @@ public class controlPanelMotors extends SubsystemBase {
     m_motor.configFactoryDefault();
 
     /* Config the sensor used for Primary PID and sensor direction */
-    m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ControlPanelConstants.kPIDLoopIdx,
+    m_motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, ControlPanelConstants.kPIDLoopIdx,
         ControlPanelConstants.kTimeoutMs);
 
     /* Ensure sensor is positive when output is positive */
@@ -47,8 +47,8 @@ public class controlPanelMotors extends SubsystemBase {
     /* Config the peak and nominal outputs, 12V means full */
     m_motor.configNominalOutputForward(0, ControlPanelConstants.kTimeoutMs);
     m_motor.configNominalOutputReverse(0, ControlPanelConstants.kTimeoutMs);
-    m_motor.configPeakOutputForward(1, ControlPanelConstants.kTimeoutMs);
-    m_motor.configPeakOutputReverse(-1, ControlPanelConstants.kTimeoutMs);
+    m_motor.configPeakOutputForward(.2, ControlPanelConstants.kTimeoutMs);
+    m_motor.configPeakOutputReverse(-.2, ControlPanelConstants.kTimeoutMs);
 
     /**
      * Config the allowable closed-loop error, Closed-Loop output will be neutral
