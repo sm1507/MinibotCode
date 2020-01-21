@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.elevatorConstants;
 
@@ -45,7 +46,7 @@ public class elevatorSubsystem extends SubsystemBase {
     elevator2.setNeutralMode(NeutralMode.Brake);
 
     // TODO:set the PIDF to the correct distance/speed.
-    P = 1.0;
+    P = 100.0;
     I = 0;
     D = 0;
     F = 0;
@@ -55,6 +56,12 @@ public class elevatorSubsystem extends SubsystemBase {
 
     setElevatorPID(P, I, D, F);
     elevator1.set(ControlMode.Position, desiredPosition);
+  }
+
+  @Override
+  public void periodic() {
+     SmartDashboard.putNumber("Elevator_1_Pos", elevator1.getSelectedSensorPosition());
+     SmartDashboard.putNumber("Evevator_2_Pos", elevator2.getSelectedSensorPosition());
   }
 
   public void setElevatorPID(double P, double I, double D, double F)

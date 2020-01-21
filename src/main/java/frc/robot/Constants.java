@@ -30,7 +30,7 @@ public final class Constants {
         public static final int elevator2 = 5;
         public static final int elevatorWinch = 6;
         public static final int elevatorPivotTimeout = 30;
-        public static final int elevatorSlotIdx = 1;
+        public static final int elevatorSlotIdx = 0;
     }
 
     public static final class Manipulator {
