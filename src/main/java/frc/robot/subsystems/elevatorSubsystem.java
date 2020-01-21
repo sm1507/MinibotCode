@@ -23,7 +23,7 @@ public class elevatorSubsystem extends SubsystemBase {
   public double D;
   public double F;
 
-  private final WPI_TalonFX elevator1 = new WPI_TalonFX(elevatorConstants.elevator1);
+  public final WPI_TalonFX elevator1 = new WPI_TalonFX(elevatorConstants.elevator1);
   private final WPI_TalonFX elevator2 = new WPI_TalonFX(elevatorConstants.elevator2);
   public final static WPI_TalonFX elevatorWinch = new WPI_TalonFX(elevatorConstants.elevatorWinch);
 
@@ -56,8 +56,7 @@ public class elevatorSubsystem extends SubsystemBase {
   }
 
   public void setElevatorPosition(double desiredPosition) {
-
-   
+    SmartDashboard.putNumber("DesiredPosition", desiredPosition);
     elevator1.set(ControlMode.Position, desiredPosition);
   }
 

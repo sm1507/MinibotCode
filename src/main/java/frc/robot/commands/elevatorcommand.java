@@ -27,15 +27,14 @@ public class elevatorCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.m_elevatorSubsystem.setElevatorPID(0.1, 0, 0, 0);
-
+    //RobotContainer.m_elevatorSubsystem.setElevatorPID(0.1, 0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //RobotContainer.m_elevatorSubsystem.setelevatorPosition(0);
-    m_elevatorSubsystem.setElevatorPosition(2048.0);
+    //m_elevatorSubsystem.setElevatorPosition(2048.0);
   }
 
   // Called once the command ends or is interrupted.

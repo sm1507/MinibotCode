@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -39,9 +41,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_driveSubsystem.setDefaultCommand(new driveCommand(m_driveSubsystem));
-    m_turretSubsystem.setDefaultCommand(new limelightTurretVisionCommand(m_turretSubsystem));
-    m_elevatorSubsystem.setDefaultCommand(new elevatorCommand());
+    //m_driveSubsystem.setDefaultCommand(new driveCommand(m_driveSubsystem));
+    //m_turretSubsystem.setDefaultCommand(new limelightTurretVisionCommand(m_turretSubsystem));
+    //m_elevatorSubsystem.setDefaultCommand(new elevatorCommand());
   }
 
   /**
@@ -52,9 +54,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
-    abutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(0.0));
+    abutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(0.0), m_elevatorSubsystem);
     final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kB.value);
-    bbutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(2048.0));
+    bbutton.whenPressed(() -> m_elevatorSubsystem.elevator1.set(ControlMode.Position, 2048), m_elevatorSubsystem);
     //bbutton.whenPressed(new elevatorCommand());
   }
 
