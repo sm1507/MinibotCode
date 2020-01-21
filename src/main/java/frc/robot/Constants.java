@@ -22,7 +22,7 @@ public static final class DriveConstants {
     public static final int k_driveController = 0;
     }
 public static final class ControlPanelConstants {
-    public static final int kMotorPort = 0;
+    public static final int kMotorPort = 4;
 
 
     public static final int kSlotIdx = 0;
