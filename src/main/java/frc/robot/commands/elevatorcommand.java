@@ -35,6 +35,7 @@ public class elevatorCommand extends CommandBase {
   @Override
   public void execute() {
     //RobotContainer.m_elevatorSubsystem.setelevatorPosition(0);
+    m_elevatorSubsystem.setElevatorPosition(2048.0);
   }
 
   // Called once the command ends or is interrupted.

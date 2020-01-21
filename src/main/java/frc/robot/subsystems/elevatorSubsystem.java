@@ -34,27 +34,30 @@ public class elevatorSubsystem extends SubsystemBase {
     elevator1.configFactoryDefault();
     elevator2.configFactoryDefault();
     elevator2.follow(elevator1);
-    elevator2.setInverted(true);
-    elevator1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, elevatorConstants.elevatorSlotIdx,
+    elevator2.setInverted(false);
+    elevator1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+        elevatorConstants.elevatorSlotIdx,
         elevatorConstants.elevatorPivotTimeout);
     elevator1.setSensorPhase(true);
     elevator1.configNominalOutputForward(0, elevatorConstants.elevatorPivotTimeout);
     elevator1.configNominalOutputReverse(0, elevatorConstants.elevatorPivotTimeout);
-    elevator1.configPeakOutputForward(1, elevatorConstants.elevatorPivotTimeout);
-    elevator1.configPeakOutputReverse(-1, elevatorConstants.elevatorPivotTimeout);
+    elevator1.configPeakOutputForward(0.25, elevatorConstants.elevatorPivotTimeout);
+    elevator1.configPeakOutputReverse(-0.25, elevatorConstants.elevatorPivotTimeout);
     elevator1.setNeutralMode(NeutralMode.Brake);
     elevator2.setNeutralMode(NeutralMode.Brake);
 
-    // TODO:set the PIDF to the correct distance/speed.
-    P = 100.0;
+    elevator1.configAllowableClosedloopError(elevatorConstants.elevatorSlotIdx, 0, elevatorConstants.elevatorPivotTimeout);
+    P = 0.1;
     I = 0;
     D = 0;
     F = 0;
+    
+    setElevatorPID(P, I, D, F);
   }
 
-  public void setElevatorPosition(int desiredPosition) {
+  public void setElevatorPosition(double desiredPosition) {
 
-    setElevatorPID(P, I, D, F);
+   
     elevator1.set(ControlMode.Position, desiredPosition);
   }
 

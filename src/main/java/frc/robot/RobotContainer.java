@@ -52,9 +52,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton abutton = new JoystickButton(m_driveController, Button.kA.value);
-    abutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(0));
-    final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kBumperRight.value);
-    bbutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(2048));
+    abutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(0.0));
+    final JoystickButton bbutton = new JoystickButton(m_driveController, Button.kB.value);
+    bbutton.whenPressed(() -> m_elevatorSubsystem.setElevatorPosition(2048.0));
+    //bbutton.whenPressed(new elevatorCommand());
   }
 
 
