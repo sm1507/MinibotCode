@@ -50,8 +50,8 @@ public class RobotContainer {
     final JoystickButton ybutton = new JoystickButton(m_driveController, Button.kY.value);
     final JoystickButton xbutton = new JoystickButton(m_driveController, Button.kX.value);
   
-    ybutton.whenPressed(() -> m_colorSensor.periodic(), m_colorSensor);
-    xbutton.whileHeld(() -> m_controlPanelMotors.setSpeed(0.2), m_controlPanelMotors);
+    ybutton.whenPressed(() -> m_controlPanelMotors.setPosition(0), m_controlPanelMotors);
+    xbutton.whenPressed(() -> m_controlPanelMotors.setPosition(19 * 4096), m_controlPanelMotors);
   }
 
 
